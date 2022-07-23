@@ -13,16 +13,11 @@ namespace Address_Book_System
         public string State;
         public string Zip;
         public string Email;
+        
 
-
-    }
-
-    public class AddPerson:ContactPerson
-    {
-        public static void AddContact()
+        public ContactPerson AddContact()
         {
-            AddPerson person = new AddPerson();     //creating object of class
-            List<AddPerson> addressBook = new List<AddPerson>();   //creating list containg objects of same class
+            ContactPerson person = new ContactPerson();     //creating object of class
 
             Console.Write("Enter First Name: ");
             person.FirstName = Console.ReadLine();
@@ -48,9 +43,82 @@ namespace Address_Book_System
             Console.Write("Enter Email: ");
             person.Email = Console.ReadLine();
 
-            addressBook.Add(person);   //Adding object to list
+            
+            return person;
+
+        }
+
+        public static void DisplayList(List<ContactPerson> addressBook)
+        {
+            if (addressBook.Count == 0)
+                Console.WriteLine("Empty");
+            foreach (var item in addressBook)
+                PrintPerson(item);
+
+        }
+
+        public static void PrintPerson(ContactPerson person)
+        {
+            Console.WriteLine("-------------------------------------------");
+
+            Console.WriteLine("First Name: " + person.FirstName);
+            Console.WriteLine("Last Name: " + person.LastName);
+            Console.WriteLine("Phone Number: " + person.PhoneNumber);
+            Console.WriteLine("Address: " + person.address);
+            Console.WriteLine("City: " + person.city);
+            Console.WriteLine("State: " + person.State);
+            Console.WriteLine("Email: " + person.Email);
+
+
+            Console.WriteLine("-------------------------------------------");
         }
 
     }
+}
+
+/* 
+
+public class ContactList:ContactPerson
+    {
+        public static void DisplayList()
+        {
+            ContactList obj = new ContactList();
+            
+            if (obj.addressBook.Count == 0)
+            {
+                Console.WriteLine("address book is empty");
+
+            }
+
+            foreach (var item in obj.addressBook)
+            {
+                Console.WriteLine(item);
+            }
+
+             static void PrintPerson(ContactPerson person)
+            {
+
+                Console.WriteLine("-------------------------------------------");
+
+                Console.WriteLine("First Name: " + person.FirstName);
+                Console.WriteLine("Last Name: " + person.LastName);
+                Console.WriteLine("Phone Number: " + person.PhoneNumber);
+                Console.WriteLine("Address: " + person.address);
+                Console.WriteLine("City: " + person.city);
+                Console.WriteLine("State: " + person.State);
+                Console.WriteLine("Email: " + person.Email);
+
+
+                Console.WriteLine("-------------------------------------------");
+            }
+
+        }
+
+
+    }
+
+    
 
 }
+*/
+

@@ -2,11 +2,42 @@
 {
     internal class Program
     {
-        List<AddPerson> addressBook = new List<AddPerson>();
+        public static List<ContactPerson> addressBook = new List<ContactPerson>();
         public static void Main(string[] args)
         {
+            
             Console.WriteLine("Welcome To Address Book System");
-            AddPerson.AddContact();
+            int options;
+            do
+            {
+                Console.WriteLine("Choose Below options");
+                Console.WriteLine("1 - ADD to Contact");
+                Console.WriteLine("2 - Display Contact List");
+                Console.WriteLine("4 - Close the Application");
+                Console.WriteLine("5 - Continue");
+
+                options = Convert.ToInt32(Console.ReadLine());
+
+                switch (options)
+                {
+                    case 1:
+                        ContactPerson obj = new ContactPerson();
+                        addressBook.Add(obj.AddContact());
+                        break;
+
+                    case 2:
+                        ContactPerson.DisplayList(addressBook);
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        continue;
+
+                }
+
+            }
+            while (options != 4);
+                
             
 
         }

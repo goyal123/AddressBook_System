@@ -57,6 +57,29 @@ namespace Address_Book_System
 
         }
 
+        public static void EditContact(List<ContactPerson> addressBook)
+        { string firstName,lastName;
+            int flag = 0;
+            Console.WriteLine("Enter the First_Name");
+            firstName = Console.ReadLine();
+            Console.WriteLine("Enter the Last Name");
+            lastName= Console.ReadLine();
+            for(int i=0;i<addressBook.Count;i++)
+            {
+                if (addressBook[i].FirstName == firstName && addressBook[i].LastName==lastName)
+                {
+                    Console.WriteLine("Contact Found! - Please Enter the correct details ");
+                    ContactPerson person = new ContactPerson();
+                    addressBook[i] = person.AddContact();
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0)
+                Console.WriteLine("Sorry Contact Not Found");
+            
+        }
+
         public static void PrintPerson(ContactPerson person)
         {
             Console.WriteLine("-------------------------------------------");

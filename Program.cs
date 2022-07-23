@@ -2,9 +2,11 @@
 {
     internal class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Welcome To Address Book System");
+           Console.WriteLine("Welcome To Address Book System");
+            ContactPerson obj = new ContactPerson();
         }
+
     }
 }

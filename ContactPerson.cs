@@ -51,33 +51,76 @@ namespace Address_Book_System
         public static void DisplayList(List<ContactPerson> addressBook)
         {
             if (addressBook.Count == 0)
-                Console.WriteLine("Empty");
-            foreach (var item in addressBook)
-                PrintPerson(item);
+                Console.WriteLine("Empty! Please Add the contact ");
+            else
+            {
+                foreach (var item in addressBook)
+                    PrintPerson(item);
+            }
+            
 
         }
 
         public static void EditContact(List<ContactPerson> addressBook)
-        { string firstName,lastName;
+        {
+            string firstName, lastName;
             int flag = 0;
-            Console.WriteLine("Enter the First_Name");
-            firstName = Console.ReadLine();
-            Console.WriteLine("Enter the Last Name");
-            lastName= Console.ReadLine();
-            for(int i=0;i<addressBook.Count;i++)
+            if (addressBook.Count == 0)
+                Console.WriteLine("Empty! Please Add the contact ");
+            else
             {
-                if (addressBook[i].FirstName == firstName && addressBook[i].LastName==lastName)
+                Console.WriteLine("Enter the First_Name");
+                firstName = Console.ReadLine();
+                Console.WriteLine("Enter the Last Name");
+                lastName = Console.ReadLine();
+                for (int i = 0; i < addressBook.Count; i++)
                 {
-                    Console.WriteLine("Contact Found! - Please Enter the correct details ");
-                    ContactPerson person = new ContactPerson();
-                    addressBook[i] = person.AddContact();
-                    flag = 1;
-                    break;
+                    if (addressBook[i].FirstName == firstName && addressBook[i].LastName == lastName)
+                    {
+                        Console.WriteLine("Contact Found! - Please Enter the correct details ");
+                        ContactPerson person = new ContactPerson();
+                        addressBook[i] = person.AddContact();
+                        flag = 1;
+                        break;
+                    }
                 }
+                if (flag == 0)
+                    Console.WriteLine("Sorry Contact Not Found");
             }
-            if (flag == 0)
-                Console.WriteLine("Sorry Contact Not Found");
+
             
+        }
+
+        public static void RemoveContact(List<ContactPerson> addressBook)
+        {
+            string firstName, lastName;
+            int flag = 0;
+
+            if (addressBook.Count == 0)
+                Console.WriteLine("Empty! Please Add the contact ");
+            else
+            {
+                Console.WriteLine("Enter the First_Name");
+                firstName = Console.ReadLine();
+                Console.WriteLine("Enter the Last Name");
+                lastName = Console.ReadLine();
+
+                for (int i = 0; i < addressBook.Count; i++)
+                {
+                    if (addressBook[i].FirstName == firstName && addressBook[i].LastName == lastName)
+                    {
+                        Console.WriteLine("Contact Found and Deleted from Contact List");
+                        addressBook.Remove(addressBook[i]);
+                        flag = 1;
+                        break;
+                    }
+                }
+
+                if (flag == 0)
+                    Console.WriteLine("Sorry! Contact Not Found");
+
+            }
+
         }
 
         public static void PrintPerson(ContactPerson person)
@@ -98,50 +141,4 @@ namespace Address_Book_System
 
     }
 }
-
-/* 
-
-public class ContactList:ContactPerson
-    {
-        public static void DisplayList()
-        {
-            ContactList obj = new ContactList();
-            
-            if (obj.addressBook.Count == 0)
-            {
-                Console.WriteLine("address book is empty");
-
-            }
-
-            foreach (var item in obj.addressBook)
-            {
-                Console.WriteLine(item);
-            }
-
-             static void PrintPerson(ContactPerson person)
-            {
-
-                Console.WriteLine("-------------------------------------------");
-
-                Console.WriteLine("First Name: " + person.FirstName);
-                Console.WriteLine("Last Name: " + person.LastName);
-                Console.WriteLine("Phone Number: " + person.PhoneNumber);
-                Console.WriteLine("Address: " + person.address);
-                Console.WriteLine("City: " + person.city);
-                Console.WriteLine("State: " + person.State);
-                Console.WriteLine("Email: " + person.Email);
-
-
-                Console.WriteLine("-------------------------------------------");
-            }
-
-        }
-
-
-    }
-
-    
-
-}
-*/
 

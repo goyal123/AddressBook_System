@@ -2,10 +2,13 @@
 {
     internal class Program
     {
+        List<AddPerson> addressBook = new List<AddPerson>();
         public static void Main(string[] args)
         {
-           Console.WriteLine("Welcome To Address Book System");
-            ContactPerson obj = new ContactPerson();
+            Console.WriteLine("Welcome To Address Book System");
+            AddPerson.AddContact();
+            
+
         }
 
     }

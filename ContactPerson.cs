@@ -15,6 +15,7 @@ namespace Address_Book_System
         public string Email;
         
 
+
         public ContactPerson AddContact()
         {
             ContactPerson person = new ContactPerson();     //creating object of class

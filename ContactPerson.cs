@@ -94,12 +94,12 @@ namespace Address_Book_System
 
         public static void Search(Dictionary<string, List<ContactPerson>> Mydict)
         {
-            Console.WriteLine("Please Enter First Name");
-            var temp_name = Console.ReadLine();
             Console.WriteLine("Pleae Enter City");
             var temp_city = Console.ReadLine();
             Console.WriteLine("Please Enter State");
             var temp_state = Console.ReadLine();
+
+            int count = 0;
 
             foreach(var item in Mydict.Keys)
             {
@@ -107,15 +107,17 @@ namespace Address_Book_System
                List<ContactPerson> addressbook = Mydict[item];
                foreach (ContactPerson person in addressbook)
                 {
-                    if ((person.FirstName.Equals(temp_name)) && (person.city.Equals(temp_city)) || (person.State.Equals(temp_state)))
+                    if ((person.city.Equals(temp_city)) || (person.State.Equals(temp_state)))
                     {
                         Console.WriteLine(item);
                         PrintPerson(person);
-                        break;
+                        count++;
                     }
                 }
                
             }
+
+            Console.WriteLine("Total Search Result = "+count);
         }
 
 

@@ -23,6 +23,7 @@
                 Console.WriteLine("5 - Delete a Contact");
                 Console.WriteLine("6 - Close the Application");
                 Console.WriteLine("7 - Continue");
+                Console.WriteLine("8 - Search a person by city or state");
 
 
                 options = Convert.ToInt32(Console.ReadLine());
@@ -133,6 +134,9 @@
                         break;
                     case 7:
                         continue;
+                    case 8:
+                        ContactPerson.Search(Mydict);
+                        break;
                 }
 
             }

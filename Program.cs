@@ -2,7 +2,8 @@
 {
     internal class Program
     {   
-        public static List<ContactPerson> addressBook = new List<ContactPerson>();
+        //public static List<ContactPerson> addressBook = new List<ContactPerson>();
+        
         public static Dictionary<string, List<ContactPerson>> Mydict = new Dictionary<string, List<ContactPerson>>();
 
 
@@ -10,7 +11,7 @@
         {
             
             Console.WriteLine("Welcome To Address Book System");
-            int options,flag=0;
+            int options,flag=0,duplicate=0;
             string book, addressBook_key;
             do
             {
@@ -40,11 +41,26 @@
                         addressBook_key = Console.ReadLine();
                         foreach (var item in Mydict.Keys)
                         {
-                            if (item==addressBook_key)
+                            if (item == addressBook_key)
                             {
                                 flag = 1;
                                 ContactPerson obj = new ContactPerson();
-                                Mydict[item].Add(obj.AddContact());
+                                var temp = obj.AddContact();
+                                
+                                foreach(var contact in Mydict[item])
+                                {
+                                    if ((contact.FirstName == temp.FirstName) && (contact.LastName == temp.LastName))
+                                    {
+                                        Console.WriteLine("Sorry! Record exits with this name");
+                                        duplicate = 1;
+                                        break;
+                                    }
+                                }
+                                if (duplicate==0)
+                                    Mydict[item].Add(temp);
+                                
+                                //Console.WriteLine(obj.AddContact().FirstName);
+                                //Mydict[item].Add(obj.AddContact());
                                 break;
                             }
 
@@ -52,8 +68,9 @@
 
                         if (flag == 0)
                             Console.WriteLine("No AddressBook Found");
-                         
+
                         break;
+                       
 
                     case 3:
                         flag = 0;

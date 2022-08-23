@@ -110,6 +110,7 @@ namespace Address_Book_System
                     if ((person.FirstName.Equals(temp_name)) && (person.city.Equals(temp_city)) || (person.State.Equals(temp_state)))
                     {
                         Console.WriteLine(item);
+                        PrintPerson(person);
                         break;
                     }
                 }

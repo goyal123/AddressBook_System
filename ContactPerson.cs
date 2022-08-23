@@ -92,6 +92,32 @@ namespace Address_Book_System
             
         }
 
+        public static void Search(Dictionary<string, List<ContactPerson>> Mydict)
+        {
+            Console.WriteLine("Please Enter First Name");
+            var temp_name = Console.ReadLine();
+            Console.WriteLine("Pleae Enter City");
+            var temp_city = Console.ReadLine();
+            Console.WriteLine("Please Enter State");
+            var temp_state = Console.ReadLine();
+
+            foreach(var item in Mydict.Keys)
+            {
+               //List<T> addressbook = Mydict[item];
+               List<ContactPerson> addressbook = Mydict[item];
+               foreach (ContactPerson person in addressbook)
+                {
+                    if ((person.FirstName.Equals(temp_name)) && (person.city.Equals(temp_city)) || (person.State.Equals(temp_state)))
+                    {
+                        Console.WriteLine(item);
+                        break;
+                    }
+                }
+               
+            }
+        }
+
+
         public static void RemoveContact(List<ContactPerson> addressBook)
         {
             string firstName, lastName;

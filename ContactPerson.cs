@@ -54,9 +54,9 @@ namespace Address_Book_System
             if (addressBook.Count == 0)
                 Console.WriteLine("Empty! Please Add the contact ");
             else
-            {
+            {   addressBook.Sort((x,y)=>x.FirstName.CompareTo(y.FirstName));
                 foreach (var item in addressBook)
-                    PrintPerson(item);
+                   PrintPerson(item);
             }
             
 

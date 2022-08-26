@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Address_Book_System
 {
@@ -49,14 +50,45 @@ namespace Address_Book_System
 
         }
 
-        public static void DisplayList(List<ContactPerson> addressBook)
+        public static void DisplayList(string bookname,List<ContactPerson> addressBook)
         {
             if (addressBook.Count == 0)
                 Console.WriteLine("Empty! Please Add the contact ");
             else
             {   addressBook.Sort((x,y)=>x.FirstName.CompareTo(y.FirstName));
-                foreach (var item in addressBook)
-                   PrintPerson(item);
+                string path = @"E:\BRIDGELABZ\Address_Book_System\";
+                path = path + bookname + ".txt";
+                using (FileStream fs = new FileStream(path, FileMode.Open,FileAccess.Write))
+                {
+                    using (StreamWriter writer = new StreamWriter(fs))
+                    {
+                        foreach (var item in addressBook)
+                        {
+                            writer.WriteLine("First Name: " + item.FirstName);
+                            writer.WriteLine("Last Name: " + item.LastName);
+                            writer.WriteLine("Phone Number: " + item.PhoneNumber);
+                            writer.WriteLine("Address: " + item.address);
+                            writer.WriteLine("City: " + item.city);
+                            writer.WriteLine("State: " + item.State);
+                            writer.WriteLine("Email: " + item.Email);
+                            writer.WriteLine();
+                        }
+                    }
+                }
+
+                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                    using (StreamReader reader = new StreamReader(fs))
+                    {
+                        string line = "";
+                        while((line=reader.ReadLine())!=null)
+                            Console.WriteLine(line);
+                    }
+                }
+                Console.ReadLine();
+
+                //foreach (var item in addressBook)
+                //  PrintPerson(item);
             }
             
 

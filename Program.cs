@@ -1,4 +1,6 @@
-﻿namespace Address_Book_System
+﻿using System.IO;
+
+namespace Address_Book_System
 {
     internal class Program
     {   
@@ -12,7 +14,8 @@
             
             Console.WriteLine("Welcome To Address Book System");
             int options,flag=0,duplicate=0;
-            string book, addressBook_key;
+            string book, addressBook_key,path;
+            //string path = @"E:\BRIDGELABZ\Address_Book_System\";
             do
             {
                 Console.WriteLine("Choose Below options");
@@ -33,18 +36,39 @@
                     case 1:
                         Console.WriteLine("Please Enter the Name of AddressBook");
                         book = Console.ReadLine();
-                        List<ContactPerson> addressBook = new List<ContactPerson>();
-                        Mydict.Add(book, addressBook);
+                       
+                        try
+                        {
+                            path = @"E:\BRIDGELABZ\Address_Book_System\";
+                            path = path + book + ".txt";
+                            using (FileStream fs = new FileStream(path, FileMode.Create))
+                            {
+                                Console.WriteLine("AddressBook Created Successfully");
+                                List<ContactPerson> addressBook = new List<ContactPerson>();
+                                Mydict.Add(book, addressBook);
+                                break;
+                            }
+                            path = @"E:\BRIDGELABZ\Address_Book_System\";
+
+                        }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                                 
                         break;
                     case 2:
+                        path = @"E:\BRIDGELABZ\Address_Book_System\";
                         flag = 0;
                         Console.WriteLine("Please Choose an AddressBook");
                         addressBook_key = Console.ReadLine();
+
                         foreach (var item in Mydict.Keys)
                         {
                             if (item == addressBook_key)
                             {
                                 flag = 1;
+                                path = path + item + ".txt";
                                 ContactPerson obj = new ContactPerson();
                                 var temp = obj.AddContact();
                                 
@@ -57,11 +81,11 @@
                                         break;
                                     }
                                 }
-                                if (duplicate==0)
+                                if (duplicate == 0)
+                                {
                                     Mydict[item].Add(temp);
-                                
-                                //Console.WriteLine(obj.AddContact().FirstName);
-                                //Mydict[item].Add(obj.AddContact());
+                                }
+
                                 break;
                             }
 
@@ -83,7 +107,7 @@
                             if (item == addressBook_key)
                             {
                                 flag = 1;
-                                ContactPerson.DisplayList(Mydict[addressBook_key]);
+                                ContactPerson.DisplayList(item,Mydict[addressBook_key]);
                                 break;
                             }
 

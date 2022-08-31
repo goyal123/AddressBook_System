@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using CsvHelper;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace Address_Book_System
@@ -14,7 +16,7 @@ namespace Address_Book_System
         public string State;
         public string Zip;
         public string Email;
-        
+
 
 
         public ContactPerson AddContact()
@@ -45,20 +47,27 @@ namespace Address_Book_System
             Console.Write("Enter Email: ");
             person.Email = Console.ReadLine();
 
-            
+
             return person;
 
         }
 
-        public static void DisplayList(string bookname,List<ContactPerson> addressBook)
+        public override string ToString()
+        {
+            return FirstName+","+LastName;
+        }
+
+        public static void DisplayList(string bookname, List<ContactPerson> addressBook)
         {
             if (addressBook.Count == 0)
                 Console.WriteLine("Empty! Please Add the contact ");
             else
-            {   addressBook.Sort((x,y)=>x.FirstName.CompareTo(y.FirstName));
+            {
+                addressBook.Sort((x, y) => x.FirstName.CompareTo(y.FirstName));
                 string path = @"E:\BRIDGELABZ\Address_Book_System\";
                 path = path + bookname + ".txt";
-                using (FileStream fs = new FileStream(path, FileMode.Open,FileAccess.Write))
+                //writing data into text file
+                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write))
                 {
                     using (StreamWriter writer = new StreamWriter(fs))
                     {
@@ -75,22 +84,37 @@ namespace Address_Book_System
                         }
                     }
                 }
-
+                //Reading data from txt file
                 using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
                     using (StreamReader reader = new StreamReader(fs))
                     {
                         string line = "";
-                        while((line=reader.ReadLine())!=null)
+                        while ((line = reader.ReadLine()) != null)
                             Console.WriteLine(line);
                     }
                 }
                 Console.ReadLine();
 
-                //foreach (var item in addressBook)
-                //  PrintPerson(item);
+                //Writing data into csv format
+                path = @"E:\BRIDGELABZ\Address_Book_System\";
+                path = path + bookname + ".csv";
+
+                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write))
+                {
+                    using (StreamWriter writer = new StreamWriter(fs))
+                    {
+                        foreach (var item in addressBook)
+                        {
+                           writer.WriteLine(item.FirstName + "," + item.LastName + "," + item.PhoneNumber+","+item.address+","+item.city+","+item.State+","+item.Email);
+                        }
+                    }
+                }
+                //Reading data from List 
+                foreach (var item in addressBook)
+                  PrintPerson(item);
             }
-            
+
 
         }
 
@@ -121,7 +145,7 @@ namespace Address_Book_System
                     Console.WriteLine("Sorry Contact Not Found");
             }
 
-            
+
         }
 
         public static void Search(Dictionary<string, List<ContactPerson>> Mydict)
@@ -133,11 +157,11 @@ namespace Address_Book_System
 
             int count = 0;
 
-            foreach(var item in Mydict.Keys)
+            foreach (var item in Mydict.Keys)
             {
-               //List<T> addressbook = Mydict[item];
-               List<ContactPerson> addressbook = Mydict[item];
-               foreach (ContactPerson person in addressbook)
+                //List<T> addressbook = Mydict[item];
+                List<ContactPerson> addressbook = Mydict[item];
+                foreach (ContactPerson person in addressbook)
                 {
                     if ((person.city.Equals(temp_city)) || (person.State.Equals(temp_state)))
                     {
@@ -146,10 +170,10 @@ namespace Address_Book_System
                         count++;
                     }
                 }
-               
+
             }
 
-            Console.WriteLine("Total Search Result = "+count);
+            Console.WriteLine("Total Search Result = " + count);
         }
 
 
@@ -203,4 +227,3 @@ namespace Address_Book_System
 
     }
 }
-

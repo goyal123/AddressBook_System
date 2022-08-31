@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using CsvHelper;
+using System.Formats.Asn1;
+using System.Globalization;
+using System.IO;
 
 namespace Address_Book_System
 {
@@ -63,6 +66,8 @@ namespace Address_Book_System
                         Console.WriteLine("Please Choose an AddressBook");
                         addressBook_key = Console.ReadLine();
 
+                        path = path + addressBook_key + ".txt";
+
                         foreach (var item in Mydict.Keys)
                         {
                             if (item == addressBook_key)
@@ -85,6 +90,8 @@ namespace Address_Book_System
                                 {
                                     Mydict[item].Add(temp);
                                 }
+
+                                path = @"E:\BRIDGELABZ\Address_Book_System\";
 
                                 break;
                             }

@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -67,7 +68,7 @@ namespace Address_Book_System
                 string path = @"E:\BRIDGELABZ\Address_Book_System\";
                 path = path + bookname + ".txt";
                 //writing data into text file
-                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write))
+                using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
                 {
                     using (StreamWriter writer = new StreamWriter(fs))
                     {
@@ -85,6 +86,7 @@ namespace Address_Book_System
                     }
                 }
                 //Reading data from txt file
+                Console.WriteLine("Reading Contacts Data from txt file");
                 using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
                     using (StreamReader reader = new StreamReader(fs))
@@ -100,7 +102,7 @@ namespace Address_Book_System
                 path = @"E:\BRIDGELABZ\Address_Book_System\";
                 path = path + bookname + ".csv";
 
-                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write))
+                using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
                 {
                     using (StreamWriter writer = new StreamWriter(fs))
                     {
@@ -110,7 +112,43 @@ namespace Address_Book_System
                         }
                     }
                 }
-                //Reading data from List 
+
+                //writing data into json format using serialization in a json file
+
+                path = @"E:\BRIDGELABZ\Address_Book_System\";
+                path = path + bookname + ".json";
+                using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+                {
+                    using (StreamWriter writer = new StreamWriter(fs))
+                    {
+                        foreach (var item in addressBook)
+                        {
+                            string jsonData = JsonConvert.SerializeObject(item);
+                            writer.WriteLine(jsonData);
+                        }
+                    }
+                }
+
+                //Reading json data from file and convert into object using deserialization
+                Console.WriteLine("Reading Contacts Data from json file");
+                path = @"E:\BRIDGELABZ\Address_Book_System\";
+                path = path + bookname + ".json";
+                ContactPerson obj = new ContactPerson();
+                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                    using (StreamReader reader = new StreamReader(fs))
+                    {
+                        string line = "";
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            obj = JsonConvert.DeserializeObject<ContactPerson>(line);
+                            PrintPerson(obj);
+                        }
+                            //Console.WriteLine(line);
+                    }
+                }
+                //Reading data from List
+                Console.WriteLine("Reading from address book List");
                 foreach (var item in addressBook)
                   PrintPerson(item);
             }
